@@ -1,0 +1,13 @@
+.stockState {
+  /* transform:rotate(30deg); */
+  /* margin-left:0; */
+  /* float: right; */
+  border: none;
+  text-align: left !important;
+  border-radius: 30px 30px 30px 30px !important;
+}
+
+.stockList {
+  overflow-y: auto !important;
+  height: 318px;
+}
