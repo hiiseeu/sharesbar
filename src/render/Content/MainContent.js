@@ -22,9 +22,12 @@ export default class MainContent extends React.Component {
 
     componentDidMount() {
         setInterval(() => {
-            // if (false) {
-            if (checkStockTime()) {
+            const stockTime = localStorage.getItem('stockTime') // 当设置页自选股有增删时，同步一下数据
+            if (checkStockTime() || JSON.parse(stockTime)) {
                 this.queryStockListData()
+                setTimeout(() => {
+                    localStorage.removeItem('stockTime') //更新两次就可以
+                }, 6000)
             }
         }, 3000); //3秒请求一次
     }
@@ -35,9 +38,25 @@ export default class MainContent extends React.Component {
     };
 
     queryStockListData() {
+        const stockStr = localStorage.getItem("mystock");
+        let arrData
+        let stateData = []
+        if (stockStr) {
+            arrData = stockStr.split("=")
+            if (!arrData[0]) {
+                arrData.shift(); //删除头部空数组
+            }
+            arrData.forEach((row, index) => {
+                row = JSON.parse(row)
+                if (typeof row === 'string') {
+                    row = JSON.parse(row)
+                }
+                stateData.push(row.stockNum)
+            })
+        }
         axios({
             method: 'get',
-            url: 'https://hq.sinajs.cn/list=sh603848,sz002739,sz000990,sh600812,sh600460,sz000650', //,sh600812,sh600460,sz000650,sh600831
+            url: 'https://hq.sinajs.cn/list=' + stateData.join(','), //,sh600812,sh600460,sz000650,sh600831
             withCredentials: true,
         }).then((response) => {
             if (response.status === 200) {
@@ -76,7 +95,7 @@ export default class MainContent extends React.Component {
                         arrData.push(JSON.stringify(chartData))
                         localStorage.setItem(stockNum, arrData.join("="))
                     });
-                    // localStorage.setItem(stockNum, JSON.stringify(curList)); // 在localStorage存一份用于闭市时显示指数；
+                    localStorage.setItem('stockList', JSON.stringify(curList)); // 在localStorage存一份用于闭市时显示指数；
                     return { stockList: curList }
                 })
             }
@@ -85,7 +104,7 @@ export default class MainContent extends React.Component {
 
     render() {
         let stockListData;
-        if (true) {
+        if (localStorage.getItem('mystock')) {
             stockListData = this.state.stockList.map(item =>
                 <StockList key={item.id} item={item} parent={this.props.parent} />
             )
@@ -106,7 +125,7 @@ export default class MainContent extends React.Component {
                         </div>
                     </Content>
                     <Footer style={{ width: '100%', height: '20px', margin: '0', padding: '0', background: '#fff' }}>
-                        <SettingOutlined onClick={this.showDrawer} style={{ textAlign: "right !important" }} />
+                        <span style={{ float: "right", margin: '-1px 4px' }} ><SettingOutlined onClick={this.showDrawer} /></span>
                     </Footer>
                 </Layout>
 

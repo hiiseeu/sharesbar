@@ -4,17 +4,18 @@ import './App.css'
 import 'antd/dist/antd.css'
 import MyHeader from './header/MyHeader'
 import MainContent from './Content/MainContent'
-import {midColor} from '../utils/CustomThemesUtil'
+import { getDefaultTheme } from './theme/CustomThemesUtil'
 
 const { Content } = Layout;
 
 class App extends React.Component {
+
   constructor() {
     super()
+    const color = getDefaultTheme()
     this.state = {
-      theme: midColor
+      theme: color
     }
-
     this.setAppBackgroud = this.setAppBackgroud.bind(this);
   }
 
@@ -24,11 +25,15 @@ class App extends React.Component {
     })
   }
 
+  componentWillUnmount() {
+    localStorage.removeItem('zsTime')
+  }
+
   render() {
     return (
       <div className='App' style={{ background: this.state.theme[0] }}>
         <header className="App-header" >
-          <MyHeader  setAppBackgroud={this.setAppBackgroud}/>
+          <MyHeader setAppBackgroud={this.setAppBackgroud} />
         </header>
         <Content className='Body'>
           <MainContent theme={this.state.theme} />

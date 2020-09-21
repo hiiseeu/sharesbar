@@ -1,0 +1,8 @@
+.dropdownStyle {
+  height: 100px;
+}
+
+.setting {
+  overflow: hidden;
+  overflow-y: auto !important;
+}

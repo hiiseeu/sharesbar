@@ -1,34 +1,29 @@
-
 .mainRow {
-    text-align: left;
-    padding: 5px;
-    margin-left: 8px;
-  }
-  
-  .mainRow Col {
-    padding-left: 4px;
-  }
-  
-  .stockName {
-  }
-  
-  .stockType {
-    background: red;
-    text-align: center;
-    border-radius: 6px;
-    height: 12px;
-    line-height: 10px;
-  }
-  
-  .stockNum {
-    font-size: 11px;
-    margin: -3px 0px 0px;
-    padding: 0px 5px;
-  }
-  
-  .line {
-    border-top: 1px dashed rgba(0, 0, 0, 0.06);
-    width: 283px;
-    margin-left: 7px;
-  }
-  
+  text-align: left;
+  padding: 5px;
+  margin-left: 8px;
+}
+
+.mainRow Col {
+  padding-left: 4px;
+}
+
+.stockType {
+  background: red;
+  text-align: center;
+  border-radius: 6px;
+  height: 12px;
+  line-height: 10px;
+}
+
+.stockNum {
+  font-size: 11px;
+  margin: -3px 0px 0px;
+  padding: 0px 5px;
+}
+
+.line {
+  border-top: 1px dashed rgba(0, 0, 0, 0.06);
+  width: 283px;
+  margin-left: 7px;
+}

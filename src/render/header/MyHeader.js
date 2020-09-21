@@ -4,6 +4,7 @@ import CarouselBar from "./CarouselBar"
 import axios from "axios"
 import options from "../options/headOptions"
 import checkStockTime from '../../utils/CheckStockTimeUtil'
+import { upColor, downColor } from '../theme/CustomThemesUtil'
 
 class MyHeader extends React.Component {
 
@@ -17,13 +18,25 @@ class MyHeader extends React.Component {
 
     componentDidMount() {
         setInterval(() => {
-            // if (false) {
-            if (checkStockTime()) {
+            const zsTime = localStorage.getItem('zsTime')
+            if (checkStockTime() || !zsTime) {
+                console.log("头更新了。。。。。。。。。")
                 this.querySynData()
+                setTimeout(() => {
+                    localStorage.setItem('zsTime', JSON.stringify(true)) //更新两次就可以
+                }, 6000)
             }
         }, 3000); //3秒请求一次
     }
 
+    setThemes = (event) => {
+        let index = event === 2 ? 0 : event + 1
+        if (this.state.list[index].change >= 0) {
+            this.props.setAppBackgroud(upColor)
+        } else {
+            this.props.setAppBackgroud(downColor)
+        }
+    }
 
     // 请求新浪大盘指数api
     querySynData() {
@@ -36,7 +49,7 @@ class MyHeader extends React.Component {
                 const list = response.data.split(';')
                 list.pop(); // 删除最后一个空数组
                 this.setState(() => { // 设置头部大盘指数，并将数据存至localStorage用于 recharts 显示
-                    const curList = [];
+                    const curList = []
                     list.forEach((row, index, array) => {
                         const listStr = row.split(',')
                         const name = listStr[0].substr(listStr[0].length - 4, 1)
@@ -69,13 +82,16 @@ class MyHeader extends React.Component {
             .catch((error) => console.log(error))
     }
 
+
+
     render() {
         const CarouselBarItems = this.state.list.map(item =>
-            <CarouselBar key={item.id} item={item} setAppBackgroud={this.props.setAppBackgroud} />
+            <CarouselBar key={item.id} item={item} ref={this.carouselBar} setAppBackgroud={this.props.setAppBackgroud} theme={this.props.theme} />
         );
         return (
             <>
-                <Carousel autoplay dotPosition={"left"}>
+                {/* autoplay */}
+                <Carousel autoplay dotPosition={"left"} beforeChange={this.setThemes}>
                     {CarouselBarItems}
                 </Carousel>
             </>

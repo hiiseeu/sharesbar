@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { getData } from '../options/areaData'
 import { AreaChart, Area, XAxis, YAxis } from 'recharts'
-import {upColor,downColor,midColor} from '../../utils/CustomThemesUtil'
+import { upColor, downColor, midColor } from '../theme/CustomThemesUtil'
 
 export default class MyAreaChart extends PureComponent {
 
@@ -17,7 +17,7 @@ export default class MyAreaChart extends PureComponent {
         if (this.props.item.change === 0) {
             fill = "url(#colorMid)"
             stroke = midColor
-        } else if (this.props.item.change < 0){
+        } else if (this.props.item.change < 0) {
             fill = "url(#colorDown)"
             stroke = downColor
         }

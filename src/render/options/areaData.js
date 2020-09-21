@@ -1,4 +1,4 @@
-const data = [
+let data = [
     { p: 441 }, { p: 451 }, { p: 461 }, { p: 441 }, { p: 421 }, { p: 401 }, { p: 441 }, { p: 451 }
 ]
 
@@ -7,7 +7,14 @@ export function getData(props) {
         : localStorage.getItem(props.item.name)
     if (preData) {
         const arrData = preData.split("=")
-        return arrData.map(row => JSON.parse(row))
+        let dataList = []
+        arrData.forEach((row, index) => {
+            if (!row) {
+                return;
+            }
+            dataList.push(JSON.parse(row))
+        })
+        data = dataList
     }
     return data
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Row } from 'antd'
 import './StockList.css'
 import MyAreaChart from '../reChart/MyAreaChart'
-import { downColor, upColor } from '../../utils/CustomThemesUtil'
+import { downColor, upColor } from '../theme/CustomThemesUtil'
 
 export default class StockList extends React.Component {
 
@@ -18,7 +18,7 @@ export default class StockList extends React.Component {
         }
     }
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
         this.setState(() => {
             const color = this.props.item.change >= 0 ? upColor : downColor;
             return {
@@ -28,7 +28,7 @@ export default class StockList extends React.Component {
     }
 
     render() {
-        
+
         return (
             <div>
                 <Row className='mainRow'>

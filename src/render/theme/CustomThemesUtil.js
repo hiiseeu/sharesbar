@@ -6,6 +6,7 @@ const midValue = localStorage.getItem('midColor');
 let upColor;
 let downColor;
 let midColor;
+
 if (upValue) {
     upColor = generate(upValue);
     downColor = generate(downValue);
@@ -19,4 +20,12 @@ if (upValue) {
     midColor = generate('#8c8c8c');
 }
 
-export { upColor, downColor, midColor};
+export function getDefaultTheme() {
+    if (localStorage.getItem('zs')) {
+        const zs = JSON.parse(localStorage.getItem('zs'));
+        return zs[0].change >= 0 ? upColor : downColor;
+    }
+}
+
+export { upColor, downColor, midColor };
+

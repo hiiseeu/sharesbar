@@ -1,13 +1,12 @@
 import React from 'react'
-import './Settings.css'
 import 'antd/dist/antd.css'
 import { Drawer } from 'antd'
 import SubContent from './SubContent'
 
 
 class Settings extends React.Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
             theme: '#fff0f0',
             visible: false
@@ -37,7 +36,6 @@ class Settings extends React.Component {
                 placement="top"
                 closable={false}
                 height='350'
-                // bodyStyle={{background:'#000'}}
                 onClose={this.onClose}
                 visible={this.state.visible}
                 getContainer={false}
