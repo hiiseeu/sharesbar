@@ -123,20 +123,21 @@ class SubContent extends React.Component {
 
     renderItem(name, stockNum, stockType, value) {
         return {
-            value: value,
+            value: name,
             label: (
                 <Row style={{ fontSize: '10px' }}>
                     <Col span={12}>{name}</Col>
                     <Col span={8}>{stockNum}</Col>
                     <Col span={4}>{stockType}</Col>
+                    <Col hidden>{value}</Col>
                 </Row>
             )
         }
     }
 
-    onSelect(value) {
+    onSelect(value,option) {
         const stockStr = localStorage.getItem("mystock");
-        value = JSON.parse(value)
+        value = JSON.parse(option.props.label.props.children[3].props.children) // 获取隐藏参数
         let arrData
         let stateData = []
         let noTag = true

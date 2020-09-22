@@ -20,7 +20,7 @@ class MyHeader extends React.Component {
         setInterval(() => {
             const zsTime = localStorage.getItem('zsTime')
             if (checkStockTime() || !zsTime) {
-                console.log("头更新了。。。。。。。。。")
+                // console.log("头更新了。。。。。。。。。")
                 this.querySynData()
                 setTimeout(() => {
                     localStorage.setItem('zsTime', JSON.stringify(true)) //更新两次就可以
