@@ -39,6 +39,7 @@ class Settings extends React.Component {
                 onClose={this.onClose}
                 visible={this.state.visible}
                 getContainer={false}
+                bodyStyle={{ marginTop: '-25px' }}
                 style={{ position: 'absolute' }}
             >
                 <SubContent />

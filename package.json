@@ -23,6 +23,7 @@
     "echarts": "^4.9.0",
     "re-echarts": "^1.0.9",
     "react": "^16.13.1",
+    "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
     "recharts": "^1.8.5",
     "typescript": "^4.0.2"

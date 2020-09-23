@@ -1,0 +1,22 @@
+.colorColStyle {
+  background: red;
+  border-radius: 10px !important;
+  cursor: pointer;
+  box-shadow: 1px 1px #333333;
+  height: 20px;
+  /* border: solid 1px; */
+}
+
+.rowStyle {
+  height: 30px;
+  padding: 10px;
+  line-height: 20px;
+  margin: -15px 0 10px 0;
+}
+
+.pickerStyle {
+  margin: 0 auto;
+  /* width: 200px;
+  box-shadow: 1px 2px 10px #333333;
+  border-radius: 5px !important; */
+}

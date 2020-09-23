@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { getData } from '../options/areaData'
 import { AreaChart, Area, XAxis, YAxis } from 'recharts'
-import { upColor, downColor, midColor } from '../theme/CustomThemesUtil'
+import Mytheme from '../theme/CustomTheme'
 
 export default class MyAreaChart extends PureComponent {
 
@@ -11,15 +11,15 @@ export default class MyAreaChart extends PureComponent {
         const min = Math.min.apply(Math, data.map(value => value.p))
         const width = this.props.options.chartOptions.width
         const height = this.props.options.chartOptions.height
-
+        const mytheme = new Mytheme()
         let fill = "url(#colorUp)"
-        let stroke = upColor
+        let stroke = mytheme.state.upColor
         if (this.props.item.change === 0) {
             fill = "url(#colorMid)"
-            stroke = midColor
+            stroke = mytheme.state.midColor
         } else if (this.props.item.change < 0) {
             fill = "url(#colorDown)"
-            stroke = downColor
+            stroke = mytheme.state.downColor
         }
         return (
             <div>
@@ -34,16 +34,16 @@ export default class MyAreaChart extends PureComponent {
                 >
                     <defs>
                         <linearGradient id="colorDown" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor={downColor[5]} stopOpacity={0.5} />
-                            <stop offset="95%" stopColor={downColor[5]} stopOpacity={0} />
+                            <stop offset="5%" stopColor={mytheme.state.downColor[5]} stopOpacity={0.5} />
+                            <stop offset="95%" stopColor={mytheme.state.downColor[5]} stopOpacity={0} />
                         </linearGradient>
                         <linearGradient id="colorUp" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor={upColor[5]} stopOpacity={0.5} />
-                            <stop offset="100%" stopColor={upColor[5]} stopOpacity={0} />
+                            <stop offset="0%" stopColor={mytheme.state.upColor[5]} stopOpacity={0.5} />
+                            <stop offset="100%" stopColor={mytheme.state.upColor[5]} stopOpacity={0} />
                         </linearGradient>
                         <linearGradient id="colorMid" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor={midColor[5]} stopOpacity={0.5} />
-                            <stop offset="100%" stopColor={midColor[5]} stopOpacity={0} />
+                            <stop offset="0%" stopColor={mytheme.state.midColor[5]} stopOpacity={0.5} />
+                            <stop offset="100%" stopColor={mytheme.state.midColor[5]} stopOpacity={0} />
                         </linearGradient>
                     </defs>
                     <XAxis hide={true} />

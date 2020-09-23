@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Row } from 'antd'
 import './StockList.css'
 import MyAreaChart from '../reChart/MyAreaChart'
-import { downColor, upColor } from '../theme/CustomThemesUtil'
+import Mytheme from '../theme/CustomTheme'
 
 export default class StockList extends React.Component {
 
@@ -18,9 +18,24 @@ export default class StockList extends React.Component {
         }
     }
 
-    componentWillReceiveProps() {
+    componentDidMount() {
+        const mytheme = new Mytheme()
         this.setState(() => {
-            const color = this.props.item.change >= 0 ? upColor : downColor;
+            const up = mytheme.state.upColor;
+            const down = mytheme.state.downColor;
+            const color = this.props.item.change >= 0 ? up : down;
+            return {
+                theme: color,
+            }
+        })
+    }
+
+    componentWillReceiveProps() {
+        const mytheme = new Mytheme()
+        this.setState(() => {
+            const up = mytheme.state.upColor;
+            const down = mytheme.state.downColor;
+            const color = this.props.item.change >= 0 ? up : down;
             return {
                 color: color
             }

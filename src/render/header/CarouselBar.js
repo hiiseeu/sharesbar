@@ -1,27 +1,43 @@
 import React from "react"
 import { Avatar, Row, Col } from 'antd'
 import MyAreaChart from '../reChart/MyAreaChart'
-import { upColor, downColor } from '../theme/CustomThemesUtil'
+import Mytheme from '../theme/CustomTheme'
+
 
 // 头部走马灯
 class CarouselBar extends React.Component {
 
     constructor() {
         super()
+        const mytheme = new Mytheme()
         this.state = {
             chartOptions: {
                 height: 40,
                 width: 210
-            }
+            },
+            upColor: mytheme.state.upColor,
+            downColor: mytheme.state.downColor
         }
+    }
+
+    componentWillReceiveProps() {
+        const mytheme = new Mytheme()
+        this.setState(() => {
+            const up = mytheme.state.upColor
+            const down = mytheme.state.downColor
+            return {
+                upColor: up,
+                downColor: down
+            }
+        })
     }
 
     render() {
         let color
-        if(this.props.item.change >=0){
-            color = upColor
+        if (this.props.item.change >= 0) {
+            color = this.state.upColor
         } else {
-            color = downColor
+            color = this.state.downColor
         }
         const contentStyle = {
             height: '80px',
@@ -29,7 +45,7 @@ class CarouselBar extends React.Component {
             lineHeight: '80px',
             textAlign: 'center',
             background: color[0],
-            top: '0', 
+            top: '0',
             fontSize: '14px'
         }
 

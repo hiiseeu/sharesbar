@@ -4,7 +4,7 @@ import CarouselBar from "./CarouselBar"
 import axios from "axios"
 import options from "../options/headOptions"
 import checkStockTime from '../../utils/CheckStockTimeUtil'
-import { upColor, downColor } from '../theme/CustomThemesUtil'
+import Mytheme from '../theme/CustomTheme'
 
 class MyHeader extends React.Component {
 
@@ -20,7 +20,6 @@ class MyHeader extends React.Component {
         setInterval(() => {
             const zsTime = localStorage.getItem('zsTime')
             if (checkStockTime() || !zsTime) {
-                // console.log("头更新了。。。。。。。。。")
                 this.querySynData()
                 setTimeout(() => {
                     localStorage.setItem('zsTime', JSON.stringify(true)) //更新两次就可以
@@ -30,11 +29,12 @@ class MyHeader extends React.Component {
     }
 
     setThemes = (event) => {
+        const mytheme = new Mytheme()
         let index = event === 2 ? 0 : event + 1
         if (this.state.list[index].change >= 0) {
-            this.props.setAppBackgroud(upColor)
+            this.props.setAppBackgroud(mytheme.state.upColor)
         } else {
-            this.props.setAppBackgroud(downColor)
+            this.props.setAppBackgroud(mytheme.state.downColor)
         }
     }
 
