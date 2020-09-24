@@ -55,7 +55,6 @@ function createWindow() {
   window.on('blur', () => {
     if (!window.webContents.isDevToolsOpened()) {
       if (window.isVisible()) {
-        console.log('window.on(blur')
         window.hide()
       }
     }
@@ -66,7 +65,6 @@ function createWindow() {
 
 
 const toggleWindow = () => {
-  console.log("window.isVisible()::::" + window.isVisible())
   if (window.isVisible()) {
     window.hide()
   } else {
