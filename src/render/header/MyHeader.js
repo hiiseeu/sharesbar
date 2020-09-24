@@ -70,6 +70,9 @@ class MyHeader extends React.Component {
                         } else {
                             arrData = new Array(1)
                         }
+                        if (Number(listStr[1]) === 0) {
+                            return;
+                        }
                         const chartData = { p: Number(listStr[1]).toFixed(2) }
                         arrData.push(JSON.stringify(chartData));
                         localStorage.setItem(name, arrData.join("="))

@@ -16,6 +16,8 @@ class Mytheme extends React.Component {
         if (localStorage.getItem('zs')) {
             const zs = JSON.parse(localStorage.getItem('zs'));
             defaultColor = zs[0].change >= 0 ? generate(localStorage.getItem('upColor')) : generate(localStorage.getItem('downColor'));
+        } else {
+            defaultColor = generate(localStorage.getItem('upColor'))
         }
 
         this.state = {

@@ -5,10 +5,11 @@ import StatusBar from './StatusBar'
 import axios from "axios"
 import stockOptions from '../options/stockOptions'
 import checkStockTime from '../../utils/CheckStockTimeUtil'
-import { Empty, Button, Layout } from 'antd'
+import { Empty, Button, Layout, Modal } from 'antd'
 import Settings from '../settings/Settings'
-import { SettingOutlined } from '@ant-design/icons'
+import { CloseCircleFilled, SettingFilled, ExclamationCircleOutlined } from '@ant-design/icons'
 const { Footer, Content } = Layout
+const { confirm } = Modal;
 
 export default class MainContent extends React.Component {
 
@@ -35,7 +36,23 @@ export default class MainContent extends React.Component {
     // 显示设置子窗口
     showDrawer = () => {
         this.Settings.showDrawer()
-    };
+    }
+
+    closeApp() {
+        confirm({
+            icon: <ExclamationCircleOutlined />,
+            content: <span>确认退出Sharebar吗？</span>,
+            okText: "确认",
+            cancelText: "取消",
+            onOk() {
+                const { ipcRenderer } = window.require("electron")
+                // const {ipcRenderer} = electron;
+                console.log(ipcRenderer)
+                ipcRenderer.send('closeApp')
+            },
+            onCancel() { },
+        });
+    }
 
     queryStockListData() {
         const stockStr = localStorage.getItem("mystock");
@@ -91,6 +108,9 @@ export default class MainContent extends React.Component {
                         } else {
                             arrData = new Array(1);
                         }
+                        if(Number(stockDetail[3]) === 0){
+                            return;
+                        }
                         const chartData = { p: stockDetail[3] }
                         arrData.push(JSON.stringify(chartData))
                         localStorage.setItem(stockNum, arrData.join("="))
@@ -125,7 +145,8 @@ export default class MainContent extends React.Component {
                         </div>
                     </Content>
                     <Footer style={{ width: '100%', height: '20px', margin: '0', padding: '0', background: '#fff' }}>
-                        <span style={{ float: "right", margin: '-1px 4px' }} ><SettingOutlined onClick={this.showDrawer} /></span>
+                        <span style={{ float: "left", margin: '-1px 4px' }} ><SettingFilled onClick={this.showDrawer} /></span>
+                        <span style={{ float: "right", margin: '-1px 4px' }} ><CloseCircleFilled onClick={this.closeApp} /></span>
                     </Footer>
                 </Layout>
 
