@@ -2,9 +2,15 @@
   "name": "sharesbar",
   "version": "1.0.0",
   "description": "盯盘小工具",
-  "author": "I SEE YOU",
+  "author": {
+    "name": "I SEE YOU",
+    "email": "yxs0118@gmail.com"
+  },
   "build": {
-    "appId": "cn.hiseeu"
+    "appId": "cn.hiseeu.sharesbar",
+    "mac": {
+      "icon": "build/icon.png"
+    }
   },
   "homepage": "./",
   "private": true,
