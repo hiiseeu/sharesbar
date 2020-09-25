@@ -34,12 +34,19 @@ npm install -g yarn
 ```
 cd <your-project-name> && npm install
 ```
+
 4. 运行
 ```
 npm run start
 ```
 ## 编译
-1. 源码编译
+1. 源码编译，编译缺啥装啥就行
 ```
 npm run build
+```
+> 注意：
+> 下载最新版electron(设置代理)
+
+```
+npx cross-env ELECTRON_GET_USE_PROXY=true GLOBAL_AGENT_HTTPS_PROXY=http://127.0.0.1:7890 npm install electron
 ```
