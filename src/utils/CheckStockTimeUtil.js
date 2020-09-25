@@ -6,7 +6,7 @@ export default function checkStockTime() {
     const aftStartDate = new Date();
     const aftEndDate = new Date();
     monrStartDate.setHours(9);
-    monrStartDate.setMinutes(20);
+    monrStartDate.setMinutes(27);
     monrEndDate.setHours(11);
     monrEndDate.setMinutes(30);
     aftStartDate.setHours(13);

@@ -7,7 +7,7 @@ const imgDir = path.join(__dirname, './assets')
 let tray = null
 let window = null
 
-app.dock.hide()
+// app.dock.hide()
 app.on('ready', () => {
   createTray()
   createWindow()
@@ -78,23 +78,6 @@ const showWindow = () => {
   window.show()
   window.focus()
 }
-
-// app.on('show-window', () => {
-//   showWindow()
-// })
-
-// app.on('window-all-closed', () => {
-//   if (process.platform !== 'darwin') {
-//     app.quit()
-//   }
-// })
-
-// app.on('activate', () => {
-//   if (BrowserWindow.getAllWindows().length === 0) {
-//     createWindow()
-//   }
-// })
-
 
 ipcMain.on('closeApp', () => {
   app.quit()
