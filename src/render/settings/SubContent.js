@@ -112,6 +112,8 @@ class SubContent extends React.Component {
     }
 
     handleSearch(value) {
+        console.log(this.state.options)
+        this.setState({options:[]})
         axios({
             method: 'get',
             url: 'https://suggest3.sinajs.cn/suggest/type=&key=' + value,
@@ -122,25 +124,43 @@ class SubContent extends React.Component {
                 list.pop(); // 删除最后一个空数组
                 this.setState(() => {
                     const curOpts = []
-                    list.forEach((row, index, array) => {
-                        if (row.indexOf('=') !== -1) {
-                            row = row.split('=')[1]
-                        }
-                        if (row) {
-                            const listArr = row.split(',')
-                            const name = listArr[4]
-                            const stockNum = listArr[3]
-                            let stockType
-                            if (listArr[3].length > 2) {
-                                stockType = listArr[3].substring(0, 2)
+                    list.forEach((row)=>{
+                        debugger
+                        let optRow
+                        try {
+                            if (row.indexOf('=') !== -1) {
+                                row = row.split('=')[1]
                             }
-                            const stock = {
-                                name: name,
-                                stockNum: stockNum,
-                                stockType: stockType
+                            if (row) {
+                                const listArr = row.split(',')
+                                const name = listArr[4]
+                                const stockNum = listArr[3]
+                                let stockType
+                                if (listArr[3].length > 2) {
+                                    stockType = listArr[3].substring(0, 2)
+                                }
+                                const stock = {
+                                    name: name,
+                                    stockNum: stockNum,
+                                    stockType: stockType
+                                }
+                                // 如果重复则不添加
+                                let notNeed = true
+                                if(curOpts[0] && curOpts[0].value){
+                                    for(let j=0;j<curOpts.length;j++){
+                                        if(curOpts[j].value === name){
+                                            notNeed = false
+                                            break;
+                                        }
+                                    }
+                                }
+                                if(notNeed){
+                                    optRow = this.renderItem(name, stockNum, stockType, JSON.stringify(stock))
+                                    curOpts.push(optRow)
+                                }
                             }
-                            const optRow = this.renderItem(name, stockNum, stockType, JSON.stringify(stock))
-                            curOpts.push(optRow)
+                        } catch (error) {
+                            console.log(error)
                         }
                     })
                     return { options: curOpts }
