@@ -6,8 +6,6 @@ ____/ /_  / / / /_/ /_  /   /  __/(__  )_  /_/ / /_/ /_  /
 /____/ /_/ /_/\__,_/ /_/    \___//____/ /_.___/\__,_/ /_/
 ```
 
-[![sharesbar Build Status](https://ci.appveyor.com/api/projects/status/4lggi9dpjc1qob7k/branch/master?svg=true)](https://ci.appveyor.com/project/electron-bot/electron-ljo26/branch/master)
-
 # MAC端看盘工具，股票盯盘软件
 #### 1. 查看股票三指实时数据
 #### 2. 搜索添加删除自选股
