@@ -13,6 +13,14 @@ ____/ /_  / / / /_/ /_  /   /  __/(__  )_  /_/ / /_/ /_  /
 #### 2. 搜索添加删除自选股
 #### 3. 更改涨跌主题
 
+## 安装
+> 按住⌘键，然后点击sharesbar图标
+## 截图
+![主页](screenshot/main.jpg)
+![搜索](screenshot/search.jpg)
+![设置涨跌](screenshot/setTheme.jpg)
+![设置后的颜色](screenshot/theme.jpg)
+
 ## 开发
 1. 下载代码.
 ```
