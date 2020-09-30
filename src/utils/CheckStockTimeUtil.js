@@ -20,6 +20,7 @@ export default function checkStockTime() {
     if ((curDate >= monrStartDate && curDate <= monrEndDate)
         || (curDate >= aftStartDate && curDate <= aftEndDate)) {
         if (curDate.getDay() !== 0 && curDate.getDay() !== 6) {
+            localStorage.setItem("updateDate", new Date().getDate())
             return true;
         }
     } else {
