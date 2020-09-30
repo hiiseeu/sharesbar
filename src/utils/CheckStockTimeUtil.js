@@ -14,12 +14,12 @@ export default function checkStockTime() {
     aftEndDate.setHours(15);
     aftEndDate.setMinutes(1);
 
-    // 清理缓存
-    clearStockDate()
 
     if ((curDate >= monrStartDate && curDate <= monrEndDate)
         || (curDate >= aftStartDate && curDate <= aftEndDate)) {
         if (curDate.getDay() !== 0 && curDate.getDay() !== 6) {
+             // 清理缓存
+            clearStockDate()
             localStorage.setItem("updateDate", new Date().getDate())
             return true;
         }
