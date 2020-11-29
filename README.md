@@ -22,7 +22,7 @@ ____/ /_  / / / /_/ /_  /   /  __/(__  )_  /_/ / /_/ /_  /
 ## 开发
 1. 下载代码.
 ```
-git clone https://github.com/willjw3/react-electron.git <your-project-name>
+git clone https://github.com/hiiseeu/sharesbar.git <your-project-name>
 ```
 2. 安装yarn.
 ```
