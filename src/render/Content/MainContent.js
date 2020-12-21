@@ -7,7 +7,7 @@ import stockOptions from '../options/stockOptions'
 import checkStockTime from '../../utils/CheckStockTimeUtil'
 import { Empty, Button, Layout, Modal } from 'antd'
 import Settings from '../settings/Settings'
-import { CloseCircleFilled, SettingFilled, ExclamationCircleOutlined } from '@ant-design/icons'
+import { PoweroffOutlined, SettingFilled, ExclamationCircleOutlined } from '@ant-design/icons'
 const { Footer, Content } = Layout
 const { confirm } = Modal;
 
@@ -146,7 +146,7 @@ export default class MainContent extends React.Component {
                     </Content>
                     <Footer style={{ width: '100%', height: '20px', margin: '0', padding: '0', background: '#fff' }}>
                         <span style={{ float: "left", margin: '-1px 4px' }} ><SettingFilled onClick={this.showDrawer} /></span>
-                        <span style={{ float: "right", margin: '-1px 4px' }} ><CloseCircleFilled onClick={this.closeApp} /></span>
+                        <span style={{ float: "right", margin: '-1px 4px' }} ><PoweroffOutlined  onClick={this.closeApp} /></span>
                     </Footer>
                 </Layout>
 

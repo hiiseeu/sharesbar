@@ -11,7 +11,7 @@ export default class StatusBar extends React.Component {
             <>
                 <Row className='statusBar' style={{ backgroundImage: 'linear-gradient(' + this.props.theme[1] + ',#fff)' }}>
                     <Col span={8}>
-                        <Tag className='stockState'>{<SlidersOutlined style={{ marginRight: '2px' }} />}{stockTime}</Tag>
+                        <Tag className='stockState'>{<SlidersOutlined style={{ margin: '0 2px 0 -15px' }} />}{stockTime}</Tag>
                     </Col>
                     <Col span={4}></Col>
                     <Col span={12} style={{ fontSize: '10px', margin: '5px 0px 0px -8px' }}>今日盈亏：10￥ 总盈亏：20￥</Col>

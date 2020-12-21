@@ -7,7 +7,7 @@ const imgDir = path.join(__dirname, './assets')
 let tray = null
 let window = null
 
-app.dock.hide()
+// app.dock.hide()
 app.on('ready', () => {
   createTray()
   createWindow()

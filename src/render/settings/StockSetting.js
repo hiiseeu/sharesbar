@@ -1,6 +1,9 @@
 import React from 'react'
 import 'antd/dist/antd.css'
-import { Row, Divider, List, Avatar, Empty, Button, Tag, Modal } from 'antd'
+import {
+    Row, Col, Divider, List, Avatar, Empty, Button, Tag,
+    Modal, Drawer, Form, InputNumber, Popconfirm, message
+} from 'antd'
 import { SlidersOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 
 const { confirm } = Modal;
@@ -9,7 +12,14 @@ const { confirm } = Modal;
 class StockSetting extends React.Component {
     constructor() {
         super()
+        this.state = {
+            childrenDrawer: false,
+            currentTarget: {}
+        }
         this.handleDelClick = this.handleDelClick.bind(this)
+        this.showChildrenDrawer = this.showChildrenDrawer.bind(this)
+        this.onChildrenDrawerClose = this.onChildrenDrawerClose.bind(this)
+        this.onFinish = this.onFinish.bind(this)
     }
 
     // 删除自选股点击事件
@@ -81,7 +91,99 @@ class StockSetting extends React.Component {
 
     }
 
+    showChildrenDrawer = (event) => {
+        this.setState({
+            childrenDrawer: true,
+            currentTarget: JSON.parse(event.currentTarget.getAttribute("item"))
+        })
+    }
+
+    onChildrenDrawerClose = () => {
+        this.setState({
+            childrenDrawer: false,
+        })
+    }
+
+    onFinish = (value) => {
+        console.log(this.state.currentTarget);
+        const stockStr = localStorage.getItem("mystock");
+        let arrData
+        let stateData = []
+        let stockData = []
+        let noTag = false
+        if (stockStr) {
+            arrData = stockStr.split("=")
+            if (!arrData[0]) {
+                arrData.shift(); //删除头部空数组
+            }
+            arrData.forEach((row, index) => {
+                row = JSON.parse(row)
+                if (typeof row === 'string') {
+                    row = JSON.parse(row)
+                }
+                if (row.stockNum === this.state.currentTarget.stockNum) {
+                    noTag = true
+                    row.shareholdingDetails = {
+                        numOfSshares: value.numOfSshares,
+                        stockCost: value.stockCost
+                    }
+                }
+                stateData.push(row)
+                stockData.push(JSON.stringify(row))
+            })
+        } else {
+            arrData = new Array(1);
+        }
+        if (noTag) {
+            localStorage.setItem("mystock", stockData.join("="))
+            this.props.setStateData(stateData)
+            message.success('添加成功！');
+            this.onChildrenDrawerClose()
+        }
+    }
+
+    delShareholdingDetails = (e) => {
+        let details = document.getElementById("shareholdingDetails");
+        let item = details.getAttribute('itemdddd');
+        item = JSON.parse(item);
+        const stockStr = localStorage.getItem("mystock");
+        let arrData
+        let stateData = []
+        let stockData = []
+        let noTag = false
+        if (stockStr) {
+            arrData = stockStr.split("=")
+            if (!arrData[0]) {
+                arrData.shift(); //删除头部空数组
+            }
+            arrData.forEach((row, index) => {
+                row = JSON.parse(row)
+                if (typeof row === 'string') {
+                    row = JSON.parse(row)
+                }
+                if (row.stockNum === item.stockNum) {
+                    noTag = true
+                    row.shareholdingDetails = {}
+                }
+                stateData.push(row)
+                stockData.push(JSON.stringify(row))
+            })
+        } else {
+            arrData = new Array(1);
+        }
+        if (noTag) {
+            localStorage.setItem("mystock", stockData.join("="))
+            this.props.setStateData(stateData);
+        }
+    }
+
     render() {
+
+        const layout = {
+            labelCol: { span: 8 },
+            wrapperCol: { span: 16 },
+        };
+
         return (
             <>
                 <div>
@@ -95,9 +197,23 @@ class StockSetting extends React.Component {
                             <List.Item style={{ height: '50px', lineHeight: '20px' }}>
                                 <List.Item.Meta
                                     style={{ height: '30px' }}
-                                    avatar={<Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{item.name}</Avatar>}
+                                    avatar={<Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }} item={JSON.stringify(item)} onClick={this.showChildrenDrawer}>{item.name}</Avatar>}
                                     description={<div>
-                                        <Row style={{ margin: '-5px 0px', color: '#000' }}>{item.name}</Row>
+                                        <Row style={{ margin: '-5px 0px', color: '#000' }}>
+                                            <Col span={11} style={{ textAlign: "left" }}>{item.name}</Col>
+                                            <Popconfirm title="要删除持股信息吗？" okText="删除" cancelText="不删"
+                                                onConfirm={this.delShareholdingDetails}>
+                                                <Col span={5}
+                                                    style={{ display: !item.shareholdingDetails.stockCost && "none", textAlign: "right", right: '-5px' }}
+                                                    itemdddd={item.stockNum}
+                                                    id="shareholdingDetails"
+                                                >
+                                                    <Tag style={{ height: '15px', fontSize: '8px', lineHeight: '15px', color: '#f56a00', background: '#fde3cf', border: '0' }}>
+                                                        成本：<span style={{ color: 'red' }}>{item.shareholdingDetails.stockCost}</span> 持股：<span style={{ color: 'red' }}>{item.shareholdingDetails.numOfSshares}</span></Tag>
+                                                </Col>
+                                            </Popconfirm>
+
+                                        </Row>
                                         <Tag icon={<SlidersOutlined />} color="#55acee" style={{ height: '15px', fontSize: '8px', lineHeight: '15px', marginLeft: '-80px' }}>{item.stockNum}</Tag>
                                         <Button size='small' type='text' danger style={{ float: 'right', fontSize: '12px', margin: '0' }} onClick={this.handleDelClick} value={item.stockNum}>删除</Button>
                                     </div>}
@@ -105,6 +221,36 @@ class StockSetting extends React.Component {
                             </List.Item>
                         )}
                     />
+                    <Drawer
+                        width={200}
+                        closable={false}
+                        onClose={this.onChildrenDrawerClose}
+                        visible={this.state.childrenDrawer}
+                    >
+                        <div>
+                            <h3>{this.state.currentTarget.name}</h3>
+                            <Divider orientation="right" dashed plain='true' style={{ marginTop: '-5px', color: "black", lineHeight: '2px' }} />
+                            <Form
+                                {...layout}
+                                name="basic"
+                                layout="vertical"
+                                onFinish={this.onFinish}
+                                // initialValues={{ curStock: this.state.currentTarget, stockCost: 0, numOfSshares: 0 }}
+                                size='small'
+                            >
+                                <Form.Item label="成本" rules={[{ required: true, message: '请输入成本!' }]} name="stockCost">
+                                    <InputNumber min={0.01} step={0.01} style={{ width: '100%' }} />
+                                </Form.Item>
+                                <Form.Item label="持股数" rules={[{ required: true, message: '请输入持股数量!' }]} name="numOfSshares">
+                                    <InputNumber min={100} step={100} style={{ width: '100%' }} />
+                                </Form.Item>
+                                {/* <Form.Item name="curStock" hidden ><Input /></Form.Item> */}
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit">提交</Button>
+                                </Form.Item>
+                            </Form>
+                        </div>
+                    </Drawer>
                 </div>
             </>
         );

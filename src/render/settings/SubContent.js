@@ -113,7 +113,7 @@ class SubContent extends React.Component {
 
     handleSearch(value) {
         console.log(this.state.options)
-        this.setState({options:[]})
+        this.setState({ options: [] })
         axios({
             method: 'get',
             url: 'https://suggest3.sinajs.cn/suggest/type=&key=' + value,
@@ -124,8 +124,7 @@ class SubContent extends React.Component {
                 list.pop(); // 删除最后一个空数组
                 this.setState(() => {
                     const curOpts = []
-                    list.forEach((row)=>{
-                        debugger
+                    list.forEach((row) => {
                         let optRow
                         try {
                             if (row.indexOf('=') !== -1) {
@@ -142,19 +141,20 @@ class SubContent extends React.Component {
                                 const stock = {
                                     name: name,
                                     stockNum: stockNum,
-                                    stockType: stockType
+                                    stockType: stockType,
+                                    shareholdingDetails: {}
                                 }
                                 // 如果重复则不添加
                                 let notNeed = true
-                                if(curOpts[0] && curOpts[0].value){
-                                    for(let j=0;j<curOpts.length;j++){
-                                        if(curOpts[j].value === name){
+                                if (curOpts[0] && curOpts[0].value) {
+                                    for (let j = 0; j < curOpts.length; j++) {
+                                        if (curOpts[j].value === name) {
                                             notNeed = false
                                             break;
                                         }
                                     }
                                 }
-                                if(notNeed){
+                                if (notNeed) {
                                     optRow = this.renderItem(name, stockNum, stockType, JSON.stringify(stock))
                                     curOpts.push(optRow)
                                 }
