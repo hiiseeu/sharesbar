@@ -14,7 +14,7 @@ app.on('ready', () => {
 })
 
 const createTray = () => {
-  tray = new Tray(path.join(imgDir, 'logo.png'))
+  tray = new Tray(path.join(imgDir, 'logoTemplate.png'))
   // tray.on('right-click', toggleWindow)
   // tray.on('double-click', toggleWindow)
   tray.on('click', function (event) {
